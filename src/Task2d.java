@@ -1,57 +1,32 @@
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
-class Task2d {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        double[][] m=new double[3][2];
-        for (int i=0;i<3;i++) {
-            for (int j = 0; j < 2; j++) {
-                m[i][j] = in.nextDouble();
-            }
-            System.out.println();
-        }
-        boolean[] bool = new boolean[4];
-        //определяем в каких четвертях находятся вершины
-        if ((m[0][0]>0 && m[0][1]>0)||(m[1][0]>0 && m[1][1]>0)||((m[2][0]>0 && m[2][1]>0)))
-            bool[0]=true;
-        if ((m[0][0]<0 && m[0][1]>0)||(m[1][0]<0 && m[1][1]>0)||((m[2][0]<0 && m[2][1]>0)))
-            bool[1]=true;
-        if ((m[0][0]<0 && m[0][1]<0)||(m[1][0]<0 && m[1][1]<0)||((m[2][0]<0 && m[2][1]<0)))
-            bool[2]=true;
-        if ((m[0][0]>0 && m[0][1]<0)||(m[1][0]>0 && m[1][1]<0)||((m[2][0]>0 && m[2][1]<0)))
-            bool[3]=true;
-        //ищим точки в диагональных четвертях
-        for (int i=0;i<2;i++){
-            for(int j=i+1;j<3;j++){
-                if ((m[i][0]>=0 && m[j][0]<=0 && m[i][1]>=0 && m[j][1]<=0)||(m[i][0]<=0 && m[j][0]>=0 && m[i][1]<=0 && m[j][1]>=0)||(m[i][0]<=0 && m[j][0]>=0 && m[i][1]>=0 && m[j][1]<=0)||(m[i][0]>=0 && m[j][0]<=0 && m[i][1]<=0 && m[j][1]>=0)){
-                    double b,k;
-                    k=(m[i][1]-m[j][1])/(m[i][0]-m[j][0]);
-                    b=m[i][1]-k*m[i][0];
-                    if (b==0)
-                        break;
-                    else {
-                        if (b>0){
-                            if (k>0)
-                                bool[1]=true;
-                            if (k<0)
-                                bool[0]=true;
-                        }
-                        else{
-                            if (k>0)
-                                bool[3]=true;
-                            if (k<0)
-                                bool[2]=true;
-                        }
-                    }
-                }
-            }
+public class Task2d {
 
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner scan = new Scanner(new File("in1.txt"));
+
+        ArrayList<Integer> list = new ArrayList<>();
+        while (scan.hasNext()){
+            list.add(scan.nextInt());
         }
-        for (int a,i=0;i<4;i++){
-            if (bool[i]) {
-                a=i+1;
-                System.out.print(a + " ");
-            }
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i:list){
+            if(map.containsKey(i)) map.replace(i, map.get(i) + 1);
+            else map.put(i, 1);
         }
+        List<Map.Entry<Integer, Integer>> lst = new ArrayList<>(map.entrySet());
+        lst.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        ArrayList<Integer> ans = new ArrayList<>();
+        int max = lst.get(0).getValue();
+        ans.add(lst.get(0).getKey());
+        for (int i = 1; i < lst.size(); i++){
+            if(max == lst.get(i).getValue()) {
+                ans.add(lst.get(i).getKey());
+            } else break;
+        }
+        ans.sort(Comparator.naturalOrder());
+        System.out.println(ans);
     }
 }
