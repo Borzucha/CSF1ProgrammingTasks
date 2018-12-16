@@ -9,10 +9,15 @@ public class Task11 {
         String text = scan.nextLine();
         String currentWord = "";
         String answer = "";
+
+        // Читаем всю строку посимвольно в цикле от начала до конца
         for (int i = 0; i < text.length(); i++) {
+            // Если символ - буква, то добавляем его в переменную накопитель "текущего слова"
             if(Character.isLetter(text.charAt(i))){
                 currentWord += text.charAt(i);
-            }else {
+            }
+            // Если дошли до небуквенного символа, то развернуть подстроку-слово в currentWord
+            else {
                 for (int j = currentWord.length() - 1; j >= 0; j--){
                     answer += currentWord.charAt(j);
                 }
@@ -20,6 +25,7 @@ public class Task11 {
                 answer += text.charAt(i);
             }
         }
+        // Если в currentWord осталось недоразвернутое слово - развернуть и конкатенировать со строкой-результатом
         if(!currentWord.equals("")){
             for (int j = currentWord.length() - 1; j >= 0; j--){
                 answer += currentWord.charAt(j);

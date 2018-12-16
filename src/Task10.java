@@ -7,14 +7,17 @@ import java.util.*;
 public class Task10 {
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner scan = new Scanner(new File("in1.txt"));
+        Scanner scan = new Scanner(new File("in1 (10).txt"));
 
-        int n = scan.nextInt();
+        int n = scan.nextInt(); // считать количество отрезков
         ArrayList<Line> lines = new ArrayList<>();
+
+        // Считываем все отрезки из файла в список отрезков
         for (int i = 0; i < n; i++) {
             lines.add(new Line(scan.nextInt(), scan.nextInt()));
         }
 
+        // Сортируем список отрезков по возрастанию
         Collections.sort(lines);
 
         int max = 0;
@@ -26,7 +29,7 @@ public class Task10 {
                     for (int k = 0; k < n; k++) {
                         if(!lines.get(j).equals(lines.get(k)) && !lines.get(i).equals(lines.get(k)))
                             if(!lines.get(i).overlap(lines.get(j)) && !lines.get(j).overlap(lines.get(k)) && !lines.get(i).overlap(lines.get(k))){
-                                int current = lines.get(i).lenght() + lines.get(j).lenght() + lines.get(k).lenght();
+                                int current = lines.get(i).length() + lines.get(j).length() + lines.get(k).length();
                                 if(current > max){
                                     max = current;
                                     maxLines.clear();
@@ -39,7 +42,6 @@ public class Task10 {
             }
         }
         Collections.sort(maxLines);
-//        System.out.println(maxLines);
 
         JFrame frame = new JFrame();
         frame.setSize(150, 100);
@@ -60,6 +62,7 @@ public class Task10 {
 
     }
 
+    // Вспомогательный класс, моделирующий отрезок
     public static class Line implements Comparable<Line>{
         public int start;
         public int end;
@@ -68,7 +71,7 @@ public class Task10 {
             this.start = start;
             this.end = end;
         }
-        public int lenght(){
+        public int length(){
             return end - start;
         }
 
