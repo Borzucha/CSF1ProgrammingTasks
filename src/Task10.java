@@ -71,16 +71,19 @@ public class Task10 {
             this.start = start;
             this.end = end;
         }
+
+        // Длина отрезка
         public int length(){
             return end - start;
         }
 
+        // Проверка на пересечение с другим отрезком
         public boolean overlap(Line other){
             return (start >= other.start && start <= other.end) || (end >= other.start && start <= other.end);
         }
 
         @Override
-        public int compareTo(Line o) {
+        public int compareTo(Line o) {  // Вводим линейный порядок (natural order) на множестве объектов "отрезок"
             if(start == o.start) return Integer.compare(end, o.end);
             else return Integer.compare(start, o.start);
         }
