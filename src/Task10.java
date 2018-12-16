@@ -89,5 +89,19 @@ public class Task10 {
         public String toString() {
             return "{" + start + " " + end + "}";
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Line line = (Line) o;
+            return start == line.start &&
+                    end == line.end;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(start, end);
+        }
     }
 }
